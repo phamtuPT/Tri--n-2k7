@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lời Tri Ân 2k7</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
   <style>
     body {
       background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
@@ -12,21 +12,32 @@
       margin: 0;
       padding: 0;
       min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .hearts-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 0;
     }
     .container {
-      max-width: 700px;
-      margin: 40px auto;
-      background: rgba(255,255,255,0.95);
-      border-radius: 18px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-      padding: 32px 24px;
+      max-width: 750px;
+      margin: 48px auto 32px auto;
+      background: rgba(255,255,255,0.97);
+      border-radius: 22px;
+      box-shadow: 0 8px 32px rgba(253,160,133,0.18);
+      padding: 40px 28px 32px 28px;
+      position: relative;
+      z-index: 1;
     }
     h1 {
       text-align: center;
-      color: #d35400;
-      margin-bottom: 28px;
-      font-size: 2.2rem;
-      letter-spacing: 1px;
+      color: #e17055;
+      margin-bottom: 32px;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      font-family: 'Pacifico', cursive;
+      text-shadow: 0 2px 8px #fda08555;
     }
     ul {
       list-style: none;
@@ -34,32 +45,117 @@
       margin: 0;
     }
     li {
-      background: #fff7e6;
-      margin-bottom: 16px;
-      padding: 18px 20px;
-      border-radius: 10px;
-      font-size: 1.1rem;
+      background: linear-gradient(90deg, #fff7e6 60%, #ffe0c1 100%);
+      margin-bottom: 18px;
+      padding: 20px 24px 20px 18px;
+      border-radius: 14px;
+      font-size: 1.15rem;
       color: #444;
-      box-shadow: 0 2px 8px rgba(253,160,133,0.07);
-      transition: transform 0.12s;
+      box-shadow: 0 2px 12px rgba(253,160,133,0.10);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.7s forwards;
+      animation-delay: var(--delay);
+      transition: box-shadow 0.18s, transform 0.18s;
+      position: relative;
     }
     li:hover {
-      transform: scale(1.025);
-      background: #ffe0c1;
+      box-shadow: 0 6px 24px #fda08555;
+      transform: scale(1.03) translateY(-2px);
+      background: linear-gradient(90deg, #ffe0c1 60%, #fff7e6 100%);
+    }
+    .icon {
+      font-size: 1.7rem;
+      margin-right: 2px;
+      filter: drop-shadow(0 1px 2px #fda08533);
+      flex-shrink: 0;
+    }
+    .name {
+      font-weight: normal;
+      color: inherit;
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      margin: 0 2px;
+      font-size: 1.08em;
+      box-shadow: none;
+      display: inline;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     @media (max-width: 600px) {
-      .container { padding: 16px 4px; }
-      h1 { font-size: 1.3rem; }
-      li { font-size: 1rem; padding: 12px 8px; }
+      .container { padding: 12px 2vw; }
+      h1 { font-size: 1.4rem; }
+      li { font-size: 1rem; padding: 12px 6px; }
     }
   </style>
 </head>
 <body>
+  <canvas class="hearts-bg"></canvas>
   <div class="container">
     <h1>Lời Tri Ân 2k7</h1>
     <ul id="gratitude-list"></ul>
   </div>
   <script>
+    // Hiệu ứng nền trái tim bay
+    const canvas = document.querySelector('.hearts-bg');
+    const ctx = canvas.getContext('2d');
+    let hearts = [];
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    function randomHeart() {
+      return {
+        x: Math.random() * canvas.width,
+        y: canvas.height + 20 + Math.random() * 40,
+        size: 16 + Math.random() * 18,
+        speed: 0.5 + Math.random() * 1.2,
+        drift: (Math.random() - 0.5) * 0.7,
+        alpha: 0.18 + Math.random() * 0.18,
+        color: Math.random() > 0.5 ? '#fda085' : '#f6d365',
+      };
+    }
+    for (let i = 0; i < 22; i++) hearts.push(randomHeart());
+    function drawHeart(x, y, size, color, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.moveTo(x, y + size * 0.3);
+      ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + size * 0.3);
+      ctx.bezierCurveTo(x - size / 2, y + size * 0.7, x, y + size * 0.9, x, y + size * 1.2);
+      ctx.bezierCurveTo(x, y + size * 0.9, x + size / 2, y + size * 0.7, x + size / 2, y + size * 0.3);
+      ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + size * 0.3);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+    function animateHearts() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let h of hearts) {
+        drawHeart(h.x, h.y, h.size, h.color, h.alpha);
+        h.y -= h.speed;
+        h.x += h.drift;
+        if (h.y < -40 || h.x < -40 || h.x > canvas.width + 40) {
+          Object.assign(h, randomHeart());
+          h.y = canvas.height + 20;
+        }
+      }
+      requestAnimationFrame(animateHearts);
+    }
+    animateHearts();
+
+    // Danh sách lời chúc
     const messages = [
       "AECK chúc em Đinh Thị Hương Thuỳ thi tốt và đỗ nguyện vọng 1.",
       "AECK chúc em Hoàng Tuấn Đạt thi tốt và đỗ nguyện vọng 1.",
@@ -132,9 +228,11 @@
       "AECK chúc em Minh Đinh Xuân thi tốt và đỗ IT1-HUST."
     ];
     const ul = document.getElementById('gratitude-list');
-    messages.forEach(msg => {
+    const icons = ["❤️", "🌟", "🎉", "✨", "🍀", "🎓", "💖", "🥇", "🌈", "🦋", "🌻", "💐", "🧡", "��", "🎈", "🌺"];
+    messages.forEach((msg, i) => {
       const li = document.createElement('li');
-      li.textContent = msg;
+      li.innerHTML = `<span class="icon">${icons[i%icons.length]}</span> ` + msg;
+      li.style.setProperty('--delay', `${i*0.04+0.1}s`);
       ul.appendChild(li);
     });
   </script>
