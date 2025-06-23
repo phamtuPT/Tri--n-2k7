@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lời Tri Ân 2k7</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: rgba(255,255,255,0.95);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 32px 24px;
+    }
+    h1 {
+      text-align: center;
+      color: #d35400;
+      margin-bottom: 28px;
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      background: #fff7e6;
+      margin-bottom: 16px;
+      padding: 18px 20px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      color: #444;
+      box-shadow: 0 2px 8px rgba(253,160,133,0.07);
+      transition: transform 0.12s;
+    }
+    li:hover {
+      transform: scale(1.025);
+      background: #ffe0c1;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 16px 4px; }
+      h1 { font-size: 1.3rem; }
+      li { font-size: 1rem; padding: 12px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Lời Tri Ân 2k7</h1>
+    <ul id="gratitude-list"></ul>
+  </div>
+  <script>
+    const messages = [
+      "AECK chúc em Đinh Thị Hương Thuỳ thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Hoàng Tuấn Đạt thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Thành Nguyễn thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Vũ Huyền thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Nguyễn Tấn Phát thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Trịnh Phong thi tốt và đỗ EE2.",
+      "AECK chúc em Nguyễn Thị Thuý Hiền thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Doãn Hưng thi tốt và đỗ ME-E1 HUST.",
+      "AECK chúc em Mạnh Tuấn thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Phương Anh thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Minh Huyền thi tốt và đỗ MI1.",
+      "AECK chúc em Hoàng Hùng thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Ngô Huy Hoàng thi tốt và đỗ ULIS 2 (UET).",
+      "AECK chúc em Nguyễn Tiến Minh Nhật thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Nguyễn Hưng thi tốt và đỗ EE1.",
+      "AECK chúc em Nhật Long thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Nghiêm Đại thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Việt Anh thi tốt và đỗ TO1.",
+      "AECK chúc em Việt Lân thi tốt và đỗ KMA.",
+      "AECK chúc em Lê Tuấn Anh thi tốt và đỗ ET1.",
+      "AECK chúc em Thái Hà thi tốt và đỗ ME2.",
+      "AECK chúc bạn Đoàn Duy thi tốt và đỗ NEU.",
+      "AECK chúc em An Huy thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Mai Nhung thi tốt và đỗ MS2.",
+      "AECK chúc em Tú Khanh thi tốt và đỗ CHx.",
+      "AECK chúc em Nguyễn Thành Đạt thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Phạm Duy Quyền thi tốt và đỗ HUST.",
+      "AECK chúc em Nguyễn Bá Việt Dũng thi tốt và đỗ MI1.",
+      "AECK chúc em Khưu Minh thi tốt và đỗ HMU.",
+      "AECK chúc em Trần Phi Hùng thi tốt và đỗ TE2.",
+      "AECK chúc em Khánh Hà thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Nguyễn Tiến Thành thi tốt và đỗ HUST.",
+      "AECK chúc em Lê Minh Đức thi tốt và đỗ FL1-HUST.",
+      "AECK chúc em Trịnh Tuấn Kiệt thi tốt và đỗ HUST.",
+      "AECK chúc em Trần Thế Bảo thi tốt và đỗ HUST.",
+      "AECK chúc em Đình Chí thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Mai Trung Hiếu thi tốt và đỗ EE1-HUST.",
+      "AECK chúc em Trịnh Văn Đạt thi tốt và đỗ EE1-HUST.",
+      "AECK chúc em Nguyễn Minh Đông thi tốt và đỗ FPT.",
+      "AECK chúc em Lê Việt Hùng thi tốt và đỗ MTA.",
+      "AECK chúc em Trịnh Tuấn Kiệt thi tốt và đỗ ME2-HUST.",
+      "AECK chúc em Dong Phuong Anh thi tốt và đỗ HUST.",
+      "AECK chúc em Phong Nguyễn đỗ IT-E7 HUST.",
+      "AECK chúc em Nguyễn Ngọc Tuấn Anh thi tốt và đỗ HUST.",
+      "AECK chúc em Văn An thi tốt và đỗ IT-E10.",
+      "AECK chúc em Nguyễn Bá Việt Dũng thi tốt và đỗ MI1.",
+      "AECK chúc em Nguyễn Văn Tài thi tốt và đỗ ME2-HUST.",
+      "AECK chúc em Trần Thị Hồng Anh thi tốt và đỗ PH3-HUST.",
+      "AECK chúc em Vi Minh thi tốt và đỗ HUP.",
+      "AECK chúc em Nguyễn Việt Đức thi tốt và đỗ MS2-HUST.",
+      "AECK chúc em Lê Thiện Giáp thi tốt và đỗ IT-E15.",
+      "AECK chúc em Lê Vĩnh Phước thi tốt là đỗ HNUE.",
+      "AECK chúc em Nguyễn Anh Tuấn thi tốt và đỗ IT-E10 HUST.",
+      "AECK chúc em Bảo Hân thi tốt và đỗ ET2-HUST.",
+      "AECK chúc em Đinh Thị Hương Thuỳ thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Minh Anh thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Ngô Hiếu thi tốt và đỗ IT-E6.",
+      "AECK chúc em Hà Thảo Trang thi tốt và đỗ EE2.",
+      "AECK chúc em Trần Vũ Đức thi tốt và đỗ IT2-HUST.",
+      "AECK chúc em Lê Minh Nghĩa thi tốt và đỗ NEU.",
+      "AECK chúc em Nguyễn Mĩ An thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Nguyễn Quốc Vững thi tốt và đỗ EM2.",
+      "AECK chúc em Nguyễn Tiến Phú thi tốt và đỗ HUST.",
+      "AECK chúc em Trần Đình Minh Nhật thi tốt và tổng 4 môn 36 điểm.",
+      "AECK chúc Linh Linh thi tốt và đỗ nguyện vọng 1.",
+      "AECK chúc em Lại Đức Phong thi tốt và đỗ MTA.",
+      "AECK chúc em Hoàng Xuân Minh Ngọc thi tốt và đỗ HMU.",
+      "AECK chúc em Đào Nhất thi tốt và đỗ HUST.",
+      "AECK chúc em Minh Đinh Xuân thi tốt và đỗ IT1-HUST."
+    ];
+    const ul = document.getElementById('gratitude-list');
+    messages.forEach(msg => {
+      const li = document.createElement('li');
+      li.textContent = msg;
+      ul.appendChild(li);
+    });
+  </script>
+</body>
+</html> 
