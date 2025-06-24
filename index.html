@@ -5,236 +5,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lời Tri Ân 2k7</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-      font-family: 'Roboto', Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    .hearts-bg {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .container {
-      max-width: 750px;
-      margin: 48px auto 32px auto;
-      background: rgba(255,255,255,0.97);
-      border-radius: 22px;
-      box-shadow: 0 8px 32px rgba(253,160,133,0.18);
-      padding: 40px 28px 32px 28px;
-      position: relative;
-      z-index: 1;
-    }
-    h1 {
-      text-align: center;
-      color: #e17055;
-      margin-bottom: 32px;
-      font-size: 2.5rem;
-      letter-spacing: 2px;
-      font-family: 'Pacifico', cursive;
-      text-shadow: 0 2px 8px #fda08555;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    li {
-      background: linear-gradient(90deg, #fff7e6 60%, #ffe0c1 100%);
-      margin-bottom: 18px;
-      padding: 20px 24px 20px 18px;
-      border-radius: 14px;
-      font-size: 1.15rem;
-      color: #444;
-      box-shadow: 0 2px 12px rgba(253,160,133,0.10);
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 0.7s forwards;
-      animation-delay: var(--delay);
-      transition: box-shadow 0.18s, transform 0.18s;
-      position: relative;
-    }
-    li:hover {
-      box-shadow: 0 6px 24px #fda08555;
-      transform: scale(1.03) translateY(-2px);
-      background: linear-gradient(90deg, #ffe0c1 60%, #fff7e6 100%);
-    }
-    .icon {
-      font-size: 1.7rem;
-      margin-right: 2px;
-      filter: drop-shadow(0 1px 2px #fda08533);
-      flex-shrink: 0;
-    }
-    .name {
-      font-weight: normal;
-      color: inherit;
-      background: none;
-      padding: 0;
-      border-radius: 0;
-      margin: 0 2px;
-      font-size: 1.08em;
-      box-shadow: none;
-      display: inline;
-    }
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    @media (max-width: 600px) {
-      .container { padding: 12px 2vw; }
-      h1 { font-size: 1.4rem; }
-      li { font-size: 1rem; padding: 12px 6px; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <canvas class="hearts-bg"></canvas>
+  
+  <!-- Nút điều khiển âm thanh -->
+  <button class="audio-control" id="audioControl" title="Bật/Tắt nhạc">
+    🔇
+  </button>
+
+  <!-- Nút ghi danh -->
+  <button class="register-btn" id="registerBtn" title="Ghi danh nhận lời chúc">
+    ✨ Ghi Danh
+  </button>
+  
+  <!-- Modal ghi danh -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>🎓 Ghi Danh Nhận Lời Chúc</h2>
+        <button class="close-btn" id="closeModal">×</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-description">
+          Hãy để lại thông tin để nhận những lời chúc tốt đẹp nhất từ AECK nhé! 
+          Chúng mình sẽ cầu chúc cho bạn đạt được ước mơ của mình! 🌟
+        </p>
+        <form id="registerForm">
+          <div class="form-group">
+            <label for="studentName">Tên của bạn:</label>
+            <input type="text" id="studentName" placeholder="Nhập tên của bạn..." required>
+          </div>
+          <div class="form-group">
+            <label for="studentWish">Nguyện vọng mong muốn:</label>
+            <input type="text" id="studentWish" placeholder="VD: Đỗ HUST, Đỗ NEU, Đỗ nguyện vọng 1..." required>
+          </div>
+          <div class="form-group">
+            <label for="studentMessage">Lời nhắn (tùy chọn):</label>
+            <textarea id="studentMessage" placeholder="Nhắn gì đó cho AECK..."></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-cancel" id="cancelBtn">Hủy</button>
+            <button type="submit" class="btn-submit">Gửi Lời Chúc ✨</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Audio element -->
+  <audio id="bgMusic" loop>
+    <!-- Thay đổi đường dẫn nhạc ở đây -->
+    <!-- Cách 1: Sử dụng file local (khuyến nghị) -->
+    <source src="audio/background-music.mp3" type="audio/mp3">
+    
+    <!-- Cách 2: Sử dụng URL MP3 trực tiếp -->
+    <!-- <source src="https://example.com/song.mp3" type="audio/mp3"> -->
+    
+    <!-- Fallback audio source -->
+    <source src="audio/fallback-music.mp3" type="audio/mp3">
+  </audio>
+  
   <div class="container">
     <h1>Lời Tri Ân 2k7</h1>
     <ul id="gratitude-list"></ul>
   </div>
-  <script>
-    // Hiệu ứng nền trái tim bay
-    const canvas = document.querySelector('.hearts-bg');
-    const ctx = canvas.getContext('2d');
-    let hearts = [];
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    function randomHeart() {
-      return {
-        x: Math.random() * canvas.width,
-        y: canvas.height + 20 + Math.random() * 40,
-        size: 16 + Math.random() * 18,
-        speed: 0.5 + Math.random() * 1.2,
-        drift: (Math.random() - 0.5) * 0.7,
-        alpha: 0.18 + Math.random() * 0.18,
-        color: Math.random() > 0.5 ? '#fda085' : '#f6d365',
-      };
-    }
-    for (let i = 0; i < 22; i++) hearts.push(randomHeart());
-    function drawHeart(x, y, size, color, alpha) {
-      ctx.save();
-      ctx.globalAlpha = alpha;
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.moveTo(x, y + size * 0.3);
-      ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + size * 0.3);
-      ctx.bezierCurveTo(x - size / 2, y + size * 0.7, x, y + size * 0.9, x, y + size * 1.2);
-      ctx.bezierCurveTo(x, y + size * 0.9, x + size / 2, y + size * 0.7, x + size / 2, y + size * 0.3);
-      ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + size * 0.3);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-    }
-    function animateHearts() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let h of hearts) {
-        drawHeart(h.x, h.y, h.size, h.color, h.alpha);
-        h.y -= h.speed;
-        h.x += h.drift;
-        if (h.y < -40 || h.x < -40 || h.x > canvas.width + 40) {
-          Object.assign(h, randomHeart());
-          h.y = canvas.height + 20;
-        }
-      }
-      requestAnimationFrame(animateHearts);
-    }
-    animateHearts();
-
-    // Danh sách lời chúc
-    const messages = [
-      "AECK chúc em Đinh Thị Hương Thuỳ thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Hoàng Tuấn Đạt thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Thành Nguyễn thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Vũ Huyền thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Nguyễn Tấn Phát thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Trịnh Phong thi tốt và đỗ EE2.",
-      "AECK chúc em Nguyễn Thị Thuý Hiền thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Doãn Hưng thi tốt và đỗ ME-E1 HUST.",
-      "AECK chúc em Mạnh Tuấn thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Phương Anh thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Minh Huyền thi tốt và đỗ MI1.",
-      "AECK chúc em Hoàng Hùng thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Ngô Huy Hoàng thi tốt và đỗ ULIS 2 (UET).",
-      "AECK chúc em Nguyễn Tiến Minh Nhật thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Nguyễn Hưng thi tốt và đỗ EE1.",
-      "AECK chúc em Nhật Long thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Nghiêm Đại thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Việt Anh thi tốt và đỗ TO1.",
-      "AECK chúc em Việt Lân thi tốt và đỗ KMA.",
-      "AECK chúc em Lê Tuấn Anh thi tốt và đỗ ET1.",
-      "AECK chúc em Thái Hà thi tốt và đỗ ME2.",
-      "AECK chúc bạn Đoàn Duy thi tốt và đỗ NEU.",
-      "AECK chúc em An Huy thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Mai Nhung thi tốt và đỗ MS2.",
-      "AECK chúc em Tú Khanh thi tốt và đỗ CHx.",
-      "AECK chúc em Nguyễn Thành Đạt thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Phạm Duy Quyền thi tốt và đỗ HUST.",
-      "AECK chúc em Nguyễn Bá Việt Dũng thi tốt và đỗ MI1.",
-      "AECK chúc em Khưu Minh thi tốt và đỗ HMU.",
-      "AECK chúc em Trần Phi Hùng thi tốt và đỗ TE2.",
-      "AECK chúc em Khánh Hà thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Nguyễn Tiến Thành thi tốt và đỗ HUST.",
-      "AECK chúc em Lê Minh Đức thi tốt và đỗ FL1-HUST.",
-      "AECK chúc em Trịnh Tuấn Kiệt thi tốt và đỗ HUST.",
-      "AECK chúc em Trần Thế Bảo thi tốt và đỗ HUST.",
-      "AECK chúc em Đình Chí thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Mai Trung Hiếu thi tốt và đỗ EE1-HUST.",
-      "AECK chúc em Trịnh Văn Đạt thi tốt và đỗ EE1-HUST.",
-      "AECK chúc em Nguyễn Minh Đông thi tốt và đỗ FPT.",
-      "AECK chúc em Lê Việt Hùng thi tốt và đỗ MTA.",
-      "AECK chúc em Trịnh Tuấn Kiệt thi tốt và đỗ ME2-HUST.",
-      "AECK chúc em Dong Phuong Anh thi tốt và đỗ HUST.",
-      "AECK chúc em Phong Nguyễn đỗ IT-E7 HUST.",
-      "AECK chúc em Nguyễn Ngọc Tuấn Anh thi tốt và đỗ HUST.",
-      "AECK chúc em Văn An thi tốt và đỗ IT-E10.",
-      "AECK chúc em Nguyễn Bá Việt Dũng thi tốt và đỗ MI1.",
-      "AECK chúc em Nguyễn Văn Tài thi tốt và đỗ ME2-HUST.",
-      "AECK chúc em Trần Thị Hồng Anh thi tốt và đỗ PH3-HUST.",
-      "AECK chúc em Vi Minh thi tốt và đỗ HUP.",
-      "AECK chúc em Nguyễn Việt Đức thi tốt và đỗ MS2-HUST.",
-      "AECK chúc em Lê Thiện Giáp thi tốt và đỗ IT-E15.",
-      "AECK chúc em Lê Vĩnh Phước thi tốt là đỗ HNUE.",
-      "AECK chúc em Nguyễn Anh Tuấn thi tốt và đỗ IT-E10 HUST.",
-      "AECK chúc em Bảo Hân thi tốt và đỗ ET2-HUST.",
-      "AECK chúc em Đinh Thị Hương Thuỳ thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Minh Anh thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Ngô Hiếu thi tốt và đỗ IT-E6.",
-      "AECK chúc em Hà Thảo Trang thi tốt và đỗ EE2.",
-      "AECK chúc em Trần Vũ Đức thi tốt và đỗ IT2-HUST.",
-      "AECK chúc em Lê Minh Nghĩa thi tốt và đỗ NEU.",
-      "AECK chúc em Nguyễn Mĩ An thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Nguyễn Quốc Vững thi tốt và đỗ EM2.",
-      "AECK chúc em Nguyễn Tiến Phú thi tốt và đỗ HUST.",
-      "AECK chúc em Trần Đình Minh Nhật thi tốt và tổng 4 môn 36 điểm.",
-      "AECK chúc Linh Linh thi tốt và đỗ nguyện vọng 1.",
-      "AECK chúc em Lại Đức Phong thi tốt và đỗ MTA.",
-      "AECK chúc em Hoàng Xuân Minh Ngọc thi tốt và đỗ HMU.",
-      "AECK chúc em Đào Nhất thi tốt và đỗ HUST.",
-      "AECK chúc em Minh Đinh Xuân thi tốt và đỗ IT1-HUST."
-    ];
-    const ul = document.getElementById('gratitude-list');
-    const icons = ["❤️", "🌟", "🎉", "✨", "🍀", "🎓", "💖", "🥇", "🌈", "🦋", "🌻", "💐", "🧡", "��", "🎈", "🌺"];
-    messages.forEach((msg, i) => {
-      const li = document.createElement('li');
-      li.innerHTML = `<span class="icon">${icons[i%icons.length]}</span> ` + msg;
-      li.style.setProperty('--delay', `${i*0.04+0.1}s`);
-      ul.appendChild(li);
-    });
-  </script>
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+  
+  <script src="script.js"></script>
 </body>
 </html> 
