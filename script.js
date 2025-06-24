@@ -111,41 +111,32 @@ registerForm.addEventListener('submit', function(e) {
 // Lưu học sinh vào Firebase
 async function saveStudentToFirebase(student) {
   try {
+    // Lấy số thứ tự hiện tại (dựa trên số lượng lời chúc mặc định + số học sinh đã ghi danh)
+    const snapshot = await db.collection('students').orderBy('timestamp', 'asc').get();
+    const stt = messages.length + snapshot.size + 1;
     await db.collection('students').add(student);
-    
-    // Thêm vào danh sách hiển thị
-    addStudentToList(student);
-    
-    // Hiển thị thông báo thành công
-    showSuccessMessage();
-    
-    // Đóng modal
+    addStudentToList(student, false, stt);
+    showSuccessMessage(stt);
     closeModalFunc();
-    
   } catch (error) {
     console.error('Lỗi khi lưu dữ liệu:', error);
     alert('Có lỗi xảy ra, vui lòng thử lại!');
-    
-    // Reset button
     const submitBtn = document.querySelector('.btn-submit');
     submitBtn.disabled = false;
     submitBtn.textContent = 'Gửi Lời Chúc ✨';
   }
 }
 
-// Hiển thị thông báo thành công
-function showSuccessMessage() {
+function showSuccessMessage(stt) {
   const successDiv = document.createElement('div');
   successDiv.className = 'success-message';
   successDiv.innerHTML = `
     <div class="success-content">
       <h3>🎉 Đăng ký thành công!</h3>
-      <p>Cảm ơn bạn đã ghi danh! AECK sẽ gửi lời chúc tốt đẹp nhất đến bạn!</p>
+      <p>Bạn là người ghi danh số <b style='color:#d32f2f;font-size:1.3em;'>#${stt}</b>! Hãy nhớ số này để tra cứu và nhận lời chúc nhé.<br>AECK sẽ gửi lời chúc tốt đẹp nhất đến bạn!</p>
       <button onclick="this.parentElement.parentElement.remove()">Đóng</button>
     </div>
   `;
-  
-  // Thêm CSS cho success message
   successDiv.style.cssText = `
     position: fixed;
     top: 0;
@@ -159,7 +150,6 @@ function showSuccessMessage() {
     z-index: 3000;
     animation: fadeIn 0.3s ease;
   `;
-  
   const successContent = successDiv.querySelector('.success-content');
   successContent.style.cssText = `
     background: white;
@@ -170,9 +160,8 @@ function showSuccessMessage() {
     margin: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   `;
-  
   successContent.querySelector('button').style.cssText = `
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -181,15 +170,12 @@ function showSuccessMessage() {
     margin-top: 15px;
     font-weight: 600;
   `;
-  
   document.body.appendChild(successDiv);
-  
-  // Tự động đóng sau 3 giây
   setTimeout(() => {
     if (successDiv.parentElement) {
       successDiv.remove();
     }
-  }, 3000);
+  }, 4000);
 }
 
 // Modal xem lời chúc chi tiết

@@ -5,11 +5,21 @@ body, .container, h1, ul, li, .register-btn, .audio-control, .modal-description,
 }
 
 body {
-  background: linear-gradient(120deg, #ffb3b3 0%, #ff5252 100%);
+  background: url('background.png') center center/cover no-repeat fixed, linear-gradient(120deg, #ffb3b3 0%, #ff5252 100%);
   margin: 0;
   padding: 0;
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: inherit;
+  filter: blur(2.5px) brightness(0.95);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .hearts-bg {
@@ -98,63 +108,69 @@ body {
 
 /* Modal */
 .modal {
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  max-width: 500px;
-  width: 90%;
-  max-height: 90vh;
-  overflow-y: auto;
-  animation: slideIn 0.3s ease;
+  background: rgba(255,255,255,0.97);
+  border-radius: 32px;
+  box-shadow: 0 12px 48px rgba(211,47,47,0.18);
+  max-width: 520px;
+  width: 96vw;
+  padding: 0;
+  animation: slideIn 0.3s;
+  border: 2.5px solid #ff5252;
+  position: relative;
+  z-index: 2;
 }
 
 .modal-header {
   background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
   color: white;
-  padding: 24px 30px 20px 30px;
-  border-radius: 20px 20px 0 0;
+  padding: 28px 36px 18px 36px;
+  border-radius: 32px 32px 0 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .modal-header h2 {
   margin: 0;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #d32f2f !important;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #fff !important;
+  text-shadow: 0 2px 8px #ffb3b3aa;
 }
 
 .close-btn {
   background: none;
   border: none;
   color: white;
-  font-size: 28px;
+  font-size: 32px;
   cursor: pointer;
   padding: 0;
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  transition: background 0.2s ease;
+  transition: background 0.2s;
 }
-
 .close-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.18);
 }
 
 .modal-body {
-  padding: 30px;
+  padding: 38px 36px 32px 36px;
 }
 
 .modal-description {
-  color: #666;
-  line-height: 1.6;
-  margin-bottom: 25px;
+  color: #d32f2f;
+  line-height: 1.7;
+  margin-bottom: 28px;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1.18rem;
+  font-weight: 500;
 }
 
 /* Form styles */
@@ -163,30 +179,24 @@ body {
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 8px;
-  color: #333;
-  font-weight: 600;
-  font-size: 0.95rem;
+  color: #d32f2f;
+  font-weight: 700;
+  font-size: 1.08rem;
 }
 
 .form-group input,
 .form-group textarea {
-  width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #e1e5e9;
-  border-radius: 12px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  box-sizing: border-box;
-  font-family: inherit;
+  border-radius: 16px;
+  border: 2px solid #ffe0e0;
+  font-size: 1.08rem;
+  padding: 14px 18px;
+  background: #fff9f9;
+  transition: border 0.2s, box-shadow 0.2s;
 }
-
 .form-group input:focus,
 .form-group textarea:focus {
-  outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #ff5252;
+  box-shadow: 0 0 0 2px #ffb3b3aa;
 }
 
 .form-group textarea {
@@ -196,8 +206,8 @@ body {
 
 .form-actions {
   display: flex;
-  gap: 12px;
-  margin-top: 30px;
+  gap: 16px;
+  margin-top: 32px;
 }
 
 .btn-cancel,
@@ -215,24 +225,32 @@ body {
 .btn-cancel {
   background: #fff0f0;
   color: #d32f2f;
-  border: 2px solid #e1e5e9;
+  border: 2px solid #ffe0e0;
+  border-radius: 16px;
+  font-size: 1.08rem;
+  font-weight: 600;
+  transition: background 0.2s, border 0.2s;
 }
-
 .btn-cancel:hover {
   background: #ffd6d6;
-  border-color: #adb5bd;
+  border-color: #ffb3b3;
 }
 
 .btn-submit {
   background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
   color: white;
-  box-shadow: 0 4px 16px rgba(255, 82, 82, 0.3);
+  font-size: 1.18rem;
+  font-weight: 700;
+  border-radius: 16px;
+  padding: 16px 0;
+  box-shadow: 0 4px 16px rgba(255, 82, 82, 0.18);
+  border: none;
+  transition: all 0.2s;
 }
-
 .btn-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255, 82, 82, 0.4);
   background: linear-gradient(135deg, #d32f2f 0%, #ff5252 100%);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 25px rgba(255, 82, 82, 0.22);
 }
 
 /* Animations */
@@ -332,15 +350,103 @@ li:hover {
 }
 
 @media (max-width: 600px) {
-  .container { 
-    padding: 12px 2vw; 
+  .container {
+    padding: 8px 0.5vw;
+    max-width: 100vw;
+    margin: 12px 0 12px 0;
   }
-  h1 { 
-    font-size: 1.4rem; 
+  h1 {
+    font-size: 1.2rem;
+    margin-bottom: 18px;
   }
-  li { 
-    font-size: 1rem; 
-    padding: 12px 6px; 
+  .modal {
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0;
+    border-radius: 0 0 24px 24px;
+    box-shadow: none;
+    border-width: 0 0 2.5px 0;
+  }
+  .modal-header {
+    padding: 18px 10px 10px 16px;
+    font-size: 1.1rem;
+    border-radius: 0;
+  }
+  .modal-header h2 {
+    font-size: 1.1rem;
+  }
+  .close-btn {
+    font-size: 22px;
+    width: 28px;
+    height: 28px;
+  }
+  .modal-body {
+    padding: 16px 8px 18px 8px;
+  }
+  .modal-description {
+    font-size: 1rem;
+    margin-bottom: 16px;
+  }
+  .form-group label {
+    font-size: 0.98rem;
+  }
+  .form-group input,
+  .form-group textarea {
+    font-size: 1rem;
+    padding: 10px 10px;
+    border-radius: 10px;
+  }
+  .form-actions {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .btn-submit, .btn-cancel {
+    font-size: 1.08rem;
+    padding: 13px 0;
+    border-radius: 10px;
+  }
+  .wish-modal {
+    max-width: 100vw;
+    width: 100vw;
+    border-radius: 0 0 18px 18px;
+    padding: 0;
+  }
+  .wish-modal-content {
+    padding: 12px 2vw 10px 2vw;
+  }
+  .wish-modal-title {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+  }
+  #wishModalBody {
+    font-size: 0.98rem;
+    margin-top: 10px;
+  }
+  .typewriter {
+    font-size: 1.05rem;
+    min-height: 60px;
+  }
+  .wish-signature {
+    padding-left: 0 !important;
+    margin-top: 18px;
+    text-align: left;
+  }
+  .wish-signature-inner {
+    font-size: 1.05rem;
+  }
+  .signature-container {
+    width: 150px;
+    height: 50px;
+    margin: 6px 0 0 auto;
+  }
+  .signature-img {
+    width: 140px;
+    height: 45px;
+  }
+  .pen {
+    width: 28px;
+    height: 28px;
   }
   .audio-control {
     top: 15px;
@@ -354,17 +460,6 @@ li:hover {
     left: 15px;
     padding: 10px 20px;
     font-size: 14px;
-  }
-  .modal {
-    width: 95%;
-    margin: 20px;
-  }
-  .modal-header,
-  .modal-body {
-    padding: 20px;
-  }
-  .form-actions {
-    flex-direction: column;
   }
 }
 
