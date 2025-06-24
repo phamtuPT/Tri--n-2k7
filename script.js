@@ -356,7 +356,7 @@ function randomHeart() {
   };
 }
 
-for (let i = 0; i < 22; i++) hearts.push(randomHeart());
+for (let i = 0; i < 50; i++) hearts.push(randomHeart());
 
 function drawHeart(x, y, size, color, alpha) {
   ctx.save();
