@@ -1,6 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap');
+
+body, .container, h1, ul, li, .register-btn, .audio-control, .modal-description, .stt, .icon {
+  font-family: 'Comfortaa', Arial, sans-serif;
+}
+
 body {
-  background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-  font-family: 'Roboto', Arial, sans-serif;
+  background: linear-gradient(120deg, #ffb3b3 0%, #ff5252 100%);
   margin: 0;
   padding: 0;
   min-height: 100vh;
@@ -19,7 +24,7 @@ body {
   top: 20px;
   right: 20px;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 235, 238, 0.9);
   border: none;
   border-radius: 50%;
   width: 60px;
@@ -31,6 +36,7 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 24px;
+  color: #d32f2f;
 }
 
 .audio-control:hover {
@@ -39,7 +45,7 @@ body {
 }
 
 .audio-control.playing {
-  background: rgba(253, 160, 133, 0.9);
+  background: rgba(255, 82, 82, 0.9);
   color: white;
 }
 
@@ -49,7 +55,7 @@ body {
   top: 20px;
   left: 20px;
   z-index: 1000;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
   border: none;
   border-radius: 25px;
   padding: 12px 24px;
@@ -57,7 +63,7 @@ body {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 16px rgba(255, 82, 82, 0.3);
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
@@ -66,8 +72,8 @@ body {
 
 .register-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  box-shadow: 0 8px 25px rgba(255, 82, 82, 0.4);
+  background: linear-gradient(135deg, #d32f2f 0%, #ff5252 100%);
 }
 
 /* Modal overlay */
@@ -77,7 +83,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(255, 82, 82, 0.18);
   backdrop-filter: blur(5px);
   z-index: 2000;
   display: none;
@@ -103,7 +109,7 @@ body {
 }
 
 .modal-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
   color: white;
   padding: 24px 30px 20px 30px;
   border-radius: 20px 20px 0 0;
@@ -116,6 +122,7 @@ body {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
+  color: #d32f2f !important;
 }
 
 .close-btn {
@@ -206,25 +213,26 @@ body {
 }
 
 .btn-cancel {
-  background: #f8f9fa;
-  color: #666;
+  background: #fff0f0;
+  color: #d32f2f;
   border: 2px solid #e1e5e9;
 }
 
 .btn-cancel:hover {
-  background: #e9ecef;
+  background: #ffd6d6;
   border-color: #adb5bd;
 }
 
 .btn-submit {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
   color: white;
-  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 16px rgba(255, 82, 82, 0.3);
 }
 
 .btn-submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px rgba(255, 82, 82, 0.4);
+  background: linear-gradient(135deg, #d32f2f 0%, #ff5252 100%);
 }
 
 /* Animations */
@@ -257,12 +265,13 @@ body {
 
 h1 {
   text-align: center;
-  color: #e17055;
+  color: #d32f2f;
   margin-bottom: 32px;
   font-size: 2.5rem;
   letter-spacing: 2px;
   font-family: 'Pacifico', cursive;
   text-shadow: 0 2px 8px #fda08555;
+  color: #d32f2f !important;
 }
 
 ul {
@@ -291,15 +300,15 @@ li {
 }
 
 li:hover {
-  box-shadow: 0 6px 24px #fda08555;
+  box-shadow: 0 6px 24px #ff525255;
   transform: scale(1.03) translateY(-2px);
-  background: linear-gradient(90deg, #ffe0c1 60%, #fff7e6 100%);
+  background: linear-gradient(90deg, #ffd6d6 60%, #fff7e6 100%);
 }
 
 .icon {
   font-size: 1.7rem;
   margin-right: 2px;
-  filter: drop-shadow(0 1px 2px #fda08533);
+  filter: drop-shadow(0 1px 2px #ff525233);
   flex-shrink: 0;
 }
 
@@ -357,4 +366,214 @@ li:hover {
   .form-actions {
     flex-direction: column;
   }
+}
+
+/* Modal xem lời chúc chi tiết */
+.wish-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.55);
+  z-index: 3000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s;
+}
+.wish-modal-overlay.show {
+  display: flex;
+}
+.wish-modal {
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 8px 40px rgba(120, 60, 180, 0.18);
+  max-width: 800px;
+  width: 98vw;
+  padding: 0;
+  animation: slideIn 0.3s;
+}
+.wish-modal-content {
+  padding: 48px 44px 32px 44px;
+  position: relative;
+  text-align: center;
+}
+.wish-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #764ba2;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  transition: background 0.2s;
+}
+.wish-modal-close:hover {
+  background: #f6d36533;
+}
+#wishModalBody {
+  font-size: 1.13rem;
+  color: #444;
+  line-height: 1.7;
+  margin-top: 18px;
+  text-align: justify !important;
+  font-family: inherit;
+}
+#wishModalBody .wish-quote {
+  display: block;
+  font-weight: bold;
+  color: #e17055;
+  margin: 18px 0 18px 0;
+  font-size: 1.08em;
+  background: #fff7e6;
+  border-radius: 10px;
+  padding: 12px 10px;
+  box-shadow: 0 2px 8px #fda08522;
+}
+@media (max-width: 600px) {
+  .wish-modal-content { padding: 18px 6vw 16px 6vw; }
+  .wish-modal { max-width: 99vw; }
+  #wishModalBody { font-size: 1rem; }
+}
+
+.wish-modal-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #d32f2f;
+  margin-bottom: 18px;
+  letter-spacing: 0.5px;
+  text-align: center;
+  color: #d32f2f !important;
+}
+.typewriter {
+  min-height: 120px;
+  white-space: pre-line;
+  font-size: 1.25rem;
+  color: #444;
+  line-height: 1.7;
+  text-align: justify !important;
+  font-family: 'JujutsuKaisen', Arial, sans-serif !important;
+  word-break: break-word;
+}
+
+@font-face {
+  font-family: 'HolidayMaria';
+  src: url('MJ-HolidayMaria-Regular-1.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.wish-signature {
+  margin-top: 32px;
+  text-align: left;
+  padding-left: 490px;
+}
+
+.wish-signature-inner {
+  display: inline-block;
+  font-family: 'JujutsuKaisen', Arial, sans-serif !important;
+  font-size: 1.18rem;
+  color: #d32f2f;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-left: 0;
+  margin-bottom: 2px;
+  text-align: left;
+  color: #d32f2f;
+}
+
+.signature-container {
+  position: relative;
+  width: 260px;
+  height: 90px;
+  margin: 8px 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.signature-img {
+  width: 240px;
+  height: 80px;
+  object-fit: contain;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  pointer-events: none;
+  mask-image: linear-gradient(90deg, #000 0%, #000 100%);
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 100%);
+}
+.pen {
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  pointer-events: none;
+  transition: transform 0.1s linear;
+}
+
+@font-face {
+  font-family: 'Daytonica';
+  src: url('MJ-VIP-Daytonica-lytrx5.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.typewriter {
+  font-family: 'Daytonica', Arial, sans-serif !important;
+}
+
+@font-face {
+  font-family: 'PutroeNavisha';
+  src: url('TDF_cut-putroe-navisha-kyokm3.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+.typewriter {
+  font-family: 'PutroeNavisha', Arial, sans-serif !important;
+}
+
+@font-face {
+  font-family: 'CharmingValentines';
+  src: url('MJ-Charming-Valentines.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.typewriter {
+  font-family: 'CharmingValentines', Arial, sans-serif !important;
+}
+
+@font-face {
+  font-family: 'Betrayos';
+  src: url('MJ-Betrayos.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.typewriter {
+  font-family: 'Betrayos', Arial, sans-serif !important;
+}
+
+@font-face {
+  font-family: 'JujutsuKaisen';
+  src: url('SJ-Jujutsu-Kaisen-1.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.typewriter {
+  font-family: 'JujutsuKaisen', Arial, sans-serif !important;
+}
+
+.success-message .success-content h3,
+.wish-modal-title,
+h1 {
+  color: #d32f2f !important;
+}
+
+.stt {
+  color: #d32f2f;
 } 

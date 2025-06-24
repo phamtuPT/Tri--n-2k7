@@ -1,11 +1,12 @@
 // Firebase Configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-  authDomain: "tri-an-2k7.firebaseapp.com",
-  projectId: "tri-an-2k7",
-  storageBucket: "tri-an-2k7.appspot.com",
-  messagingSenderId: "123456789012",
-  appId: "1:123456789012:web:abcdefghijklmnop"
+  apiKey: "AIzaSyB7L_ha4apWhMHRGUSQkFG7RFK1MCT4snk",
+  authDomain: "data-aeck-tri-an.firebaseapp.com",
+  projectId: "data-aeck-tri-an",
+  storageBucket: "data-aeck-tri-an.appspot.com",
+  messagingSenderId: "35346305667",
+  appId: "1:35346305667:web:5722c20978b0a8ac4001b6",
+  measurementId: "G-T4KRKX2KW1"
 };
 
 // Initialize Firebase
@@ -191,59 +192,157 @@ function showSuccessMessage() {
   }, 3000);
 }
 
-// Thêm học sinh vào danh sách hiển thị
-function addStudentToList(student) {
-  const ul = document.getElementById('gratitude-list');
-  const icons = ["❤️", "🌟", "🎉", "✨", "🍀", "🎓", "💖", "🥇", "🌈", "🦋", "🌻", "💐", "🧡", "🎵", "🎈", "🌺"];
-  
-  const li = document.createElement('li');
-  const iconIndex = Math.floor(Math.random() * icons.length);
-  const message = `AECK chúc em ${student.name} thi tốt và đỗ ${student.wish}.`;
-  
-  li.innerHTML = `<span class="icon">${icons[iconIndex]}</span> ${message}`;
-  li.style.setProperty('--delay', '0.1s');
-  li.style.opacity = '0';
-  li.style.transform = 'translateY(30px)';
-  
-  ul.appendChild(li);
-  
-  // Trigger animation
-  setTimeout(() => {
-    li.style.animation = 'fadeInUp 0.7s forwards';
-  }, 100);
+// Modal xem lời chúc chi tiết
+const wishModalOverlay = document.getElementById('wishModalOverlay');
+const wishModalClose = document.getElementById('wishModalClose');
+const wishModalBody = document.getElementById('wishModalBody');
+
+function showWishModal(message) {
+  wishModalBody.innerHTML = `
+    <div class='wish-modal-title'>Đôi lời nhắn nhủ tới em</div>
+    <div class='typewriter' id='typewriterText'></div>
+    <div class='wish-signature' id='wishSignature' style='display:none;'>
+      <span class='wish-signature-inner' id='signTypewriter'></span>
+    </div>
+    <div class='signature-container' id='signatureContainer' style='display:none;'>
+      <img src='sign.png' class='signature-img' id='signatureImg' alt='Chữ ký AECK'/>
+      <svg class='pen' id='penSVG' viewBox='0 0 48 48'>
+        <image href='pen.png' width='48' height='48'/>
+      </svg>
+    </div>
+  `;
+  wishModalOverlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+  // Hiệu ứng đánh máy nội dung chính
+  const text = `Hi em! Vậy là chuyến tàu thanh xuân của chúng ta sắp dừng lại và một chặng đường mới sắp mở ra. Hi vọng chúng ta đã có những giây phút đẹp khi được đồng hành cùng nhau trong quãng thời gian vừa rồi. Sau cùng, ${message} Chúc chặng đường sắp tới của em ngày càng rực rỡ và thành công hơn nhé!`;
+  typeWriterEffect('typewriterText', text, 0, 80, () => {
+    document.getElementById('wishSignature').style.display = '';
+    // Hiệu ứng đánh máy cho dòng ký tên
+    typeWriterEffect('signTypewriter', 'Đại diện <b>AECK</b> - Anh Tú', 0, 40, () => {
+      document.getElementById('signatureContainer').style.display = '';
+      animateSignature();
+    });
+  });
 }
 
-// Load danh sách học sinh từ Firebase
-async function loadStudentsFromFirebase() {
-  try {
-    const snapshot = await db.collection('students')
-      .orderBy('timestamp', 'desc')
-      .limit(50) // Giới hạn 50 học sinh gần nhất
-      .get();
-    
-    snapshot.forEach(doc => {
-      const student = doc.data();
-      addStudentToList(student);
-    });
-    
-  } catch (error) {
-    console.error('Lỗi khi tải dữ liệu:', error);
-    // Fallback: hiển thị danh sách mặc định
-    showDefaultMessages();
+function typeWriterEffect(elementId, text, i, speed, callback) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  if (i <= text.length) {
+    el.innerHTML = text.slice(0, i) + '<span style="border-right:2px solid #764ba2;">&nbsp;</span>';
+    setTimeout(() => typeWriterEffect(elementId, text, i + 1, speed, callback), speed);
+  } else {
+    el.innerHTML = text;
+    if (callback) callback();
   }
 }
 
-// Hiển thị danh sách mặc định khi không có kết nối
+// Animation bút máy và chữ ký
+function animateSignature() {
+  const pen = document.getElementById('penSVG');
+  const signImg = document.getElementById('signatureImg');
+  if (!pen || !signImg) return;
+  // Path mô phỏng đường ký (từ trên xuống dưới, dao động trái phải)
+  const pathLength = 80; // chiều cao ảnh chữ ký
+  let progress = 0;
+  signImg.style.opacity = 1;
+  signImg.style.maskImage = signImg.style.webkitMaskImage = `linear-gradient(180deg, #000 0%, transparent 0%)`;
+  function step() {
+    progress += 0.5; // tốc độ vẽ
+    if (progress > pathLength) progress = pathLength;
+    // Dao động trái phải theo hình sin
+    const amplitude = 30; // px
+    const frequency = 2; // số lần lắc
+    const offsetX = 100 + Math.sin(progress / pathLength * Math.PI * frequency) * amplitude;
+    pen.style.transform = `translate(${offsetX}px, ${progress}px)`;
+    // Lộ dần chữ ký theo chiều dọc
+    signImg.style.maskImage = signImg.style.webkitMaskImage = `linear-gradient(180deg, #000 0%, #000 ${progress/pathLength*100}%, transparent ${progress/pathLength*100}%)`;
+    if (progress < pathLength) {
+      requestAnimationFrame(step);
+    } else {
+      pen.style.opacity = 0;
+      signImg.style.maskImage = signImg.style.webkitMaskImage = 'none';
+    }
+  }
+  pen.style.opacity = 1;
+  requestAnimationFrame(step);
+}
+
+function hideWishModal() {
+  wishModalOverlay.classList.remove('show');
+  document.body.style.overflow = 'auto';
+}
+
+wishModalClose.addEventListener('click', hideWishModal);
+wishModalOverlay.addEventListener('click', function(e) {
+  if (e.target === wishModalOverlay) hideWishModal();
+});
+
+// Gắn sự kiện click cho từng li sau khi render
+function attachWishModalEvents() {
+  const ul = document.getElementById('gratitude-list');
+  Array.from(ul.children).forEach(li => {
+    li.style.cursor = 'pointer';
+    li.onclick = function() {
+      // Lấy nội dung lời chúc (bỏ số thứ tự và icon)
+      const msg = li.textContent.replace(/^\s*\d+\./, '').replace(/^\s*\S+\s*/, '').trim();
+      showWishModal(msg);
+    };
+  });
+}
+
+// Hiển thị danh sách mặc định (luôn ở đầu)
 function showDefaultMessages() {
   const ul = document.getElementById('gratitude-list');
+  ul.innerHTML = '';
   const icons = ["❤️", "🌟", "🎉", "✨", "🍀", "🎓", "💖", "🥇", "🌈", "🦋", "🌻", "💐", "🧡", "🎵", "🎈", "🌺"];
-  
   messages.forEach((msg, i) => {
     const li = document.createElement('li');
-    li.innerHTML = `<span class="icon">${icons[i%icons.length]}</span> ` + msg;
+    li.innerHTML = `<span class='stt'>${i + 1}.</span> <span class=\"icon\">${icons[i%icons.length]}</span> ` + msg;
     li.style.setProperty('--delay', `${i*0.04+0.1}s`);
     ul.appendChild(li);
   });
+  attachWishModalEvents();
+}
+
+// Load danh sách học sinh từ Firebase (real-time, append xuống cuối)
+function loadStudentsFromFirebaseRealtime() {
+  const ul = document.getElementById('gratitude-list');
+  showDefaultMessages();
+  db.collection('students')
+    .orderBy('timestamp', 'asc')
+    .limit(50)
+    .onSnapshot(snapshot => {
+      while (ul.children.length > messages.length) {
+        ul.removeChild(ul.lastChild);
+      }
+      let stt = messages.length;
+      snapshot.forEach(doc => {
+        const student = doc.data();
+        stt++;
+        addStudentToList(student, true, stt);
+      });
+      attachWishModalEvents();
+    }, error => {
+      console.error('Lỗi khi lắng nghe dữ liệu:', error);
+    });
+}
+
+// Thêm học sinh vào danh sách hiển thị (append cuối, có số thứ tự)
+function addStudentToList(student, noDelay, stt) {
+  const ul = document.getElementById('gratitude-list');
+  const icons = ["❤️", "🌟", "🎉", "✨", "🍀", "🎓", "💖", "🥇", "🌈", "🦋", "🌻", "💐", "🧡", "🎵", "🎈", "🌺"];
+  const li = document.createElement('li');
+  const iconIndex = Math.floor(Math.random() * icons.length);
+  const message = `AECK chúc em ${student.name} thi tốt và đỗ ${student.wish}.`;
+  li.innerHTML = `<span class='stt'>${stt}.</span> <span class=\"icon\">${icons[iconIndex]}</span> ${message}`;
+  li.style.setProperty('--delay', noDelay ? '0s' : '0.1s');
+  li.style.opacity = '0';
+  li.style.transform = 'translateY(30px)';
+  ul.appendChild(li); // luôn thêm vào cuối
+  setTimeout(() => {
+    li.style.animation = 'fadeInUp 0.7s forwards';
+  }, 100);
 }
 
 // Hiệu ứng nền trái tim bay
@@ -377,7 +476,13 @@ const messages = [
   "AECK chúc em Minh Đinh Xuân thi tốt và đỗ IT1-HUST."
 ];
 
-// Load danh sách học sinh từ Firebase khi trang load
+// Thêm CSS cho số thứ tự
+(function addSTTStyle() {
+  const style = document.createElement('style');
+  style.innerHTML = `.stt { display:inline-block; min-width:2em; font-weight:bold; color:#764ba2; font-size:1.1em; margin-right:6px; }`;
+  document.head.appendChild(style);
+})();
+
 document.addEventListener('DOMContentLoaded', function() {
-  loadStudentsFromFirebase();
+  loadStudentsFromFirebaseRealtime();
 }); 
