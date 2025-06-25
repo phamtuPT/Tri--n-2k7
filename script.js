@@ -638,4 +638,61 @@ document.addEventListener('click', function(e) {
       topBtnGroup.classList.remove('show');
     }
   }
+});
+
+// --- Hiệu ứng động khi có ghi danh/lời nhắn mới ---
+let lastStudentCount = 0;
+let lastThanksCount = 0;
+function showCelebrationEffect(type) {
+  // Confetti
+  confetti({
+    particleCount: 120,
+    spread: 90,
+    origin: { y: 0.6 },
+    zIndex: 3005
+  });
+  // Pháo hoa (nhiều điểm)
+  for (let i = 0; i < 3; i++) {
+    setTimeout(() => {
+      confetti({
+        particleCount: 60,
+        angle: 60 + i*30,
+        spread: 55,
+        origin: { x: Math.random(), y: Math.random()*0.5 },
+        zIndex: 3005
+      });
+    }, i*250);
+  }
+  // Popup chúc mừng
+  const popup = document.createElement('div');
+  popup.textContent = type === 'student' ? '🎉 Có người vừa ghi danh mới!' : '💌 Có lời nhắn cảm ơn mới!';
+  popup.style.cssText = `
+    position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
+    background: #fff0f0; color: #d32f2f; font-size: 1.18rem; font-weight: 700;
+    padding: 16px 32px; border-radius: 18px; box-shadow: 0 4px 24px #ffb3b322;
+    z-index: 4000; opacity: 0.98; animation: fadeIn 0.3s; text-align: center;`;
+  document.body.appendChild(popup);
+  setTimeout(()=>{ popup.remove(); }, 2600);
+}
+// Lắng nghe realtime ghi danh
+function listenCelebrationStudent() {
+  db.collection('students').orderBy('timestamp','asc').onSnapshot(snapshot => {
+    if (lastStudentCount && snapshot.size > lastStudentCount) {
+      showCelebrationEffect('student');
+    }
+    lastStudentCount = snapshot.size;
+  });
+}
+// Lắng nghe realtime lời nhắn cảm ơn
+function listenCelebrationThanks() {
+  db.collection('thanks').onSnapshot(snapshot => {
+    if (lastThanksCount && snapshot.size > lastThanksCount) {
+      showCelebrationEffect('thanks');
+    }
+    lastThanksCount = snapshot.size;
+  });
+}
+document.addEventListener('DOMContentLoaded', function() {
+  listenCelebrationStudent();
+  listenCelebrationThanks();
 }); 
