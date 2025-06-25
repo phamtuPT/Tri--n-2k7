@@ -71,6 +71,7 @@
       </div>
       <div class="modal-body">
         <form id="thankFormModal">
+          <input type="text" id="thankNameModal" placeholder="Tên của bạn (tuỳ chọn)" maxlength="30" style="margin-bottom:8px;" />
           <textarea id="thankInputModal" placeholder="Nhắn gì đó cho AECK..." required maxlength="200"></textarea>
           <button type="submit" class="btn-submit">Gửi lời nhắn 💌</button>
         </form>
@@ -97,6 +98,7 @@
     <div class="search-bar">
       <input type="text" id="searchInput" placeholder="Tìm kiếm theo tên, số thứ tự, nguyện vọng..." autocomplete="off" />
     </div>
+    <div id="searchResultCount" style="text-align:center;color:#d32f2f;font-weight:500;margin-bottom:10px;"></div>
     <ul id="gratitude-list"></ul>
   </div>
   

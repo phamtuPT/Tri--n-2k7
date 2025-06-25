@@ -471,6 +471,7 @@ const messages = [
 
 // --- Tìm kiếm lời chúc ---
 const searchInput = document.getElementById('searchInput');
+const searchResultCount = document.getElementById('searchResultCount');
 let allWishes = [];
 
 function renderWishes(list) {
@@ -478,11 +479,17 @@ function renderWishes(list) {
   ul.innerHTML = '';
   list.forEach((item, i) => {
     const li = document.createElement('li');
-    li.innerHTML = `<span class='stt'>${item.stt}.</span> <span class="icon">${item.icon}</span> ${item.text}`;
+    li.innerHTML = `<span class='stt'>${item.stt}.</span> <span class=\"icon\">${item.icon}</span> ${item.text}`;
     li.style.setProperty('--delay', `${i*0.04+0.1}s`);
     ul.appendChild(li);
   });
   attachWishModalEvents();
+  // Hiển thị số kết quả nếu đang tìm kiếm
+  if (searchInput.value.trim()) {
+    searchResultCount.textContent = `Tìm thấy ${list.length} kết quả phù hợp.`;
+  } else {
+    searchResultCount.textContent = '';
+  }
 }
 
 function updateAllWishes() {
@@ -543,6 +550,7 @@ const closeThankModal = document.getElementById('closeThankModal');
 const thankFormModal = document.getElementById('thankFormModal');
 const thankInputModal = document.getElementById('thankInputModal');
 const thankListModal = document.getElementById('thankListModal');
+const thankNameModal = document.getElementById('thankNameModal');
 
 thankBtn.addEventListener('click', function() {
   thankModalOverlay.classList.add('show');
@@ -568,7 +576,7 @@ function renderThanksModal(thanks) {
   thanks.slice().reverse().forEach(msg => {
     const div = document.createElement('div');
     div.className = 'thank-item';
-    div.textContent = msg.text;
+    div.innerHTML = `${msg.text}<div style='font-size:0.97em;color:#888;margin-top:4px;text-align:right;'>— ${msg.name||'Ẩn danh'}</div>`;
     thankListModal.appendChild(div);
   });
 }
@@ -586,20 +594,26 @@ function loadThanksModalRealtime() {
 thankFormModal.addEventListener('submit', async function(e) {
   e.preventDefault();
   const text = thankInputModal.value.trim();
+  let name = thankNameModal.value.trim();
   if (!text) return;
+  if (!name) name = 'Ẩn danh';
   thankInputModal.disabled = true;
+  thankNameModal.disabled = true;
   thankFormModal.querySelector('.btn-submit').textContent = 'Đang gửi...';
   try {
     await db.collection('thanks').add({
       text,
+      name,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     });
     thankInputModal.value = '';
+    thankNameModal.value = '';
     alert('Lời nhắn của bạn đã được gửi tới AECK!');
   } catch (err) {
     alert('Gửi thất bại, thử lại sau!');
   }
   thankInputModal.disabled = false;
+  thankNameModal.disabled = false;
   thankFormModal.querySelector('.btn-submit').textContent = 'Gửi lời nhắn 💌';
 });
 
