@@ -624,4 +624,18 @@ document.addEventListener('DOMContentLoaded', function() {
 const finalBtn = document.getElementById('finalBtn');
 finalBtn.addEventListener('click', function() {
   window.open('./loi_chuc/index.html', '_blank');
+});
+
+const menuBtn = document.getElementById('menuBtn');
+const topBtnGroup = document.getElementById('topBtnGroup');
+menuBtn.addEventListener('click', function(e) {
+  e.stopPropagation();
+  topBtnGroup.classList.toggle('show');
+});
+document.addEventListener('click', function(e) {
+  if (window.innerWidth <= 600 && topBtnGroup.classList.contains('show')) {
+    if (!topBtnGroup.contains(e.target) && e.target !== menuBtn) {
+      topBtnGroup.classList.remove('show');
+    }
+  }
 }); 
