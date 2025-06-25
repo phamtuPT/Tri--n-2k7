@@ -742,4 +742,247 @@ h1 {
     padding: 10px 12px;
     border-radius: 14px;
   }
+}
+
+.thank-message-section {
+  margin-top: 38px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 18px;
+  box-shadow: 0 2px 12px #ffb3b322;
+  padding: 22px 18px 18px 18px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.thank-title {
+  color: #d32f2f;
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-align: center;
+}
+#thankForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+#thankInput {
+  width: 100%;
+  min-height: 60px;
+  max-width: 420px;
+  border-radius: 12px;
+  border: 2px solid #ffd6d6;
+  font-size: 1.08rem;
+  padding: 12px 16px;
+  background: #fff9f9;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 6px #ffb3b322;
+  outline: none;
+  resize: vertical;
+}
+#thankInput:focus {
+  border-color: #ff5252;
+  box-shadow: 0 0 0 2px #ffb3b3aa;
+}
+#thankForm .btn-submit {
+  width: 180px;
+  margin-top: 4px;
+}
+#thankList {
+  margin-top: 10px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+.thank-item {
+  background: #fff0f0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  color: #d32f2f;
+  font-size: 1.05rem;
+  box-shadow: 0 1px 4px #ffb3b322;
+  word-break: break-word;
+}
+@media (max-width: 600px) {
+  .thank-message-section {
+    padding: 12px 4vw 10px 4vw;
+    max-width: 99vw;
+  }
+  #thankInput {
+    font-size: 1rem;
+    padding: 9px 8px;
+    border-radius: 8px;
+    min-height: 40px;
+  }
+  #thankForm .btn-submit {
+    width: 100%;
+    font-size: 1.01rem;
+    padding: 11px 0;
+    border-radius: 8px;
+  }
+  .thank-title {
+    font-size: 1.05rem;
+  }
+  .thank-item {
+    font-size: 0.98rem;
+    padding: 8px 8px;
+  }
+}
+
+#thankBtn {
+  position: fixed;
+  top: 20px;
+  left: 170px;
+  z-index: 1000;
+  background: #ffb3b3;
+  color: #d32f2f;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(255, 82, 82, 0.13);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#thankBtn:hover {
+  background: #ffd6d6;
+  color: #b71c1c;
+}
+@media (max-width: 600px) {
+  #thankBtn {
+    top: 60px;
+    left: 15px;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 18px;
+  }
+}
+
+.top-btn-group {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+}
+@media (max-width: 600px) {
+  .top-btn-group {
+    top: 10px;
+    left: 10px;
+    gap: 8px;
+  }
+}
+#registerBtn, #thankBtn, #finalBtn {
+  position: static !important;
+  width: 210px;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.modal-header .modal-icon {
+  font-size: 1.5em;
+  margin-right: 4px;
+}
+#thankFormModal {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+#thankInputModal {
+  width: 100%;
+  min-height: 60px;
+  max-width: 420px;
+  border-radius: 14px;
+  border: 2px solid #ffd6d6;
+  font-size: 1.08rem;
+  padding: 13px 16px;
+  background: #fff9f9;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px #ffb3b322;
+  outline: none;
+  resize: vertical;
+}
+#thankInputModal:focus {
+  border-color: #ff5252;
+  box-shadow: 0 0 0 2px #ffb3b3aa;
+}
+#thankFormModal .btn-submit {
+  width: 100%;
+  font-size: 1.13rem;
+  padding: 15px 0;
+  border-radius: 14px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+#thankListModal {
+  margin-top: 10px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+#thankListModal .thank-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 13px 16px;
+  margin-bottom: 10px;
+  color: #d32f2f;
+  font-size: 1.08rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px #ffb3b322;
+  word-break: break-word;
+  text-align: left;
+}
+@media (max-width: 600px) {
+  #thankInputModal {
+    font-size: 1rem;
+    padding: 9px 8px;
+    border-radius: 8px;
+    min-height: 40px;
+  }
+  #thankFormModal .btn-submit {
+    font-size: 1.01rem;
+    padding: 11px 0;
+    border-radius: 8px;
+  }
+  #thankListModal .thank-item {
+    font-size: 0.98rem;
+    padding: 8px 8px;
+    border-radius: 8px;
+  }
+}
+
+.modal-overlay #thankModalOverlay .modal, #thankModalOverlay .modal {
+  max-width: 520px;
+  width: 96vw;
+}
+#thankInputModal {
+  max-width: 480px;
+}
+#thankListModal {
+  max-width: 480px;
+}
+@media (max-width: 600px) {
+  .modal-overlay #thankModalOverlay .modal, #thankModalOverlay .modal {
+    max-width: 99vw;
+    width: 99vw;
+  }
+  #thankInputModal, #thankListModal {
+    max-width: 99vw;
+  }
 } 

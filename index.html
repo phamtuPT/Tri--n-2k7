@@ -15,10 +15,17 @@
     🔇
   </button>
 
-  <!-- Nút ghi danh -->
-  <button class="register-btn" id="registerBtn" title="Ghi danh nhận lời chúc">
-    ✨ Ghi Danh
-  </button>
+  <div class="top-btn-group">
+    <button class="register-btn" id="registerBtn" title="Ghi danh nhận lời chúc">
+      ✨ Ghi Danh
+    </button>
+    <button class="register-btn" id="thankBtn" title="Gửi lời chúc tới AECK" style="background: #ffb3b3; color: #d32f2f;">
+      💌 Gửi lời chúc tới AECK
+    </button>
+    <button class="register-btn" id="finalBtn" title="Lời cuối cùng" style="background: #d32f2f; color: #fff;">
+      📝 Lời cuối cùng
+    </button>
+  </div>
   
   <!-- Modal ghi danh -->
   <div class="modal-overlay" id="modalOverlay">
@@ -50,6 +57,24 @@
             <button type="submit" class="btn-submit">Gửi Lời Chúc ✨</button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal gửi lời nhắn cảm ơn AECK -->
+  <div class="modal-overlay" id="thankModalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-icon">💌</span>
+        <h2>Gửi lời nhắn tới AECK</h2>
+        <button class="close-btn" id="closeThankModal">×</button>
+      </div>
+      <div class="modal-body">
+        <form id="thankFormModal">
+          <textarea id="thankInputModal" placeholder="Nhắn gì đó cho AECK..." required maxlength="200"></textarea>
+          <button type="submit" class="btn-submit">Gửi lời nhắn 💌</button>
+        </form>
+        <div id="thankListModal"></div>
       </div>
     </div>
   </div>

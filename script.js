@@ -534,4 +534,80 @@ searchInput.addEventListener('input', function() {
 
 document.addEventListener('DOMContentLoaded', function() {
   updateAllWishes();
+});
+
+// --- Modal gửi lời nhắn cảm ơn AECK ---
+const thankBtn = document.getElementById('thankBtn');
+const thankModalOverlay = document.getElementById('thankModalOverlay');
+const closeThankModal = document.getElementById('closeThankModal');
+const thankFormModal = document.getElementById('thankFormModal');
+const thankInputModal = document.getElementById('thankInputModal');
+const thankListModal = document.getElementById('thankListModal');
+
+thankBtn.addEventListener('click', function() {
+  thankModalOverlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+});
+closeThankModal.addEventListener('click', function() {
+  thankModalOverlay.classList.remove('show');
+  document.body.style.overflow = 'auto';
+});
+thankModalOverlay.addEventListener('click', function(e) {
+  if (e.target === thankModalOverlay) {
+    thankModalOverlay.classList.remove('show');
+    document.body.style.overflow = 'auto';
+  }
+});
+
+function renderThanksModal(thanks) {
+  thankListModal.innerHTML = '';
+  if (thanks.length === 0) {
+    thankListModal.innerHTML = '<div style="color:#aaa;text-align:center;">Chưa có lời nhắn nào...</div>';
+    return;
+  }
+  thanks.slice().reverse().forEach(msg => {
+    const div = document.createElement('div');
+    div.className = 'thank-item';
+    div.textContent = msg.text;
+    thankListModal.appendChild(div);
+  });
+}
+
+function loadThanksModalRealtime() {
+  db.collection('thanks').orderBy('timestamp','desc').limit(30).onSnapshot(snapshot => {
+    const thanks = [];
+    snapshot.forEach(doc => {
+      thanks.push(doc.data());
+    });
+    renderThanksModal(thanks);
+  });
+}
+
+thankFormModal.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const text = thankInputModal.value.trim();
+  if (!text) return;
+  thankInputModal.disabled = true;
+  thankFormModal.querySelector('.btn-submit').textContent = 'Đang gửi...';
+  try {
+    await db.collection('thanks').add({
+      text,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    thankInputModal.value = '';
+    alert('Lời nhắn của bạn đã được gửi tới AECK!');
+  } catch (err) {
+    alert('Gửi thất bại, thử lại sau!');
+  }
+  thankInputModal.disabled = false;
+  thankFormModal.querySelector('.btn-submit').textContent = 'Gửi lời nhắn 💌';
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  loadThanksModalRealtime();
+});
+
+const finalBtn = document.getElementById('finalBtn');
+finalBtn.addEventListener('click', function() {
+  window.open('./loi_chuc/index.html', '_blank');
 }); 
