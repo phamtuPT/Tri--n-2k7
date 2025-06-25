@@ -469,6 +469,69 @@ const messages = [
   document.head.appendChild(style);
 })();
 
+// --- Tìm kiếm lời chúc ---
+const searchInput = document.getElementById('searchInput');
+let allWishes = [];
+
+function renderWishes(list) {
+  const ul = document.getElementById('gratitude-list');
+  ul.innerHTML = '';
+  list.forEach((item, i) => {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class='stt'>${item.stt}.</span> <span class="icon">${item.icon}</span> ${item.text}`;
+    li.style.setProperty('--delay', `${i*0.04+0.1}s`);
+    ul.appendChild(li);
+  });
+  attachWishModalEvents();
+}
+
+function updateAllWishes() {
+  allWishes = [];
+  // Lời chúc mặc định
+  const icons = ["❤️", "🌟", "🎉", "✨", "🍀", "🎓", "💖", "🥇", "🌈", "🦋", "🌻", "💐", "🧡", "🎵", "🎈", "🌺"];
+  messages.forEach((msg, i) => {
+    allWishes.push({
+      stt: i + 1,
+      icon: icons[i % icons.length],
+      text: msg,
+      type: 'default'
+    });
+  });
+  // Lời chúc học sinh ghi danh
+  db.collection('students').orderBy('timestamp', 'asc').get().then(snapshot => {
+    let stt = messages.length;
+    snapshot.forEach(doc => {
+      const student = doc.data();
+      stt++;
+      const message = `AECK chúc em ${student.name} thi tốt và đỗ ${student.wish}.`;
+      allWishes.push({
+        stt,
+        icon: icons[Math.floor(Math.random() * icons.length)],
+        text: message,
+        type: 'student',
+        name: student.name,
+        wish: student.wish
+      });
+    });
+    renderWishes(allWishes);
+  });
+}
+
+searchInput.addEventListener('input', function() {
+  const q = this.value.trim().toLowerCase();
+  if (!q) {
+    renderWishes(allWishes);
+    return;
+  }
+  const filtered = allWishes.filter(item =>
+    item.text.toLowerCase().includes(q) ||
+    (item.name && item.name.toLowerCase().includes(q)) ||
+    (item.wish && item.wish.toLowerCase().includes(q)) ||
+    (item.stt + '').includes(q)
+  );
+  renderWishes(filtered);
+});
+
 document.addEventListener('DOMContentLoaded', function() {
-  loadStudentsFromFirebaseRealtime();
+  updateAllWishes();
 }); 
